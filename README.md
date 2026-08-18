@@ -360,7 +360,7 @@ All AEGIS code lives under `finbot/aegis/`, is additive only to the existing Fin
 
 ## 13. Thought Leadership
 
-📝 **Published (Midterm):** *"Hardening Agentic AI: Building the AEGIS Security Framework for OWASP FinBot CTF"*, a technical progress report covering the first seven weeks: the telemetry pipeline's cryptographic design, IntentGate's intent capsule concept, the Attack Simulator's sandbox architecture, and the four engineering challenges detailed in [§9](#9-engineering-challenges-solutions).
+📝 **Published (Midterm):** [*"Hardening Agentic AI: Building the AEGIS Security Framework for OWASP FinBot CTF"*](https://gsocupdate1.hashnode.dev/hardening-agentic-ai-building-the-aegis-security-framework-for-owasp-finbot-ctf), a technical progress report covering the first seven weeks: the telemetry pipeline's cryptographic design, IntentGate's intent capsule concept, the Attack Simulator's sandbox architecture, and the four engineering challenges detailed in [§9](#9-engineering-challenges-solutions).
 
 📝 **Planned (Closing):** *"Building FinBot-AEGIS: Sandboxed MCP Red Teaming Against the OWASP Agentic Top 10"*, covering the Pillar 1 simulator design, mock adversarial MCP servers, and final Red Team Harness benchmark results, targeted for the OWASP GenAI Security Project blog.
 
