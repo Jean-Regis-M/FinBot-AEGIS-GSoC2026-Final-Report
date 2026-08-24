@@ -76,7 +76,7 @@ AEGIS is built around **four interlocking pillars**:
 - 📡 **Telemetry Pipeline ("SentinelStream")**: a tamper evident, HMAC-SHA256 chained audit trail streamed in real time.
 - 🧪 **Red Team Harness**: an AIVSS aligned scoring engine and `pytest-aegis` plugin that benchmarks detector effectiveness in CI.
 
-Across the coding period I shipped **six substantial pull requests** covering all four pillars plus two brand new CTF challenges, in addition to **two smaller fixes merged earlier** that hardened the FinBot core before the coding period began. All work is released under the project's existing **Apache License 2.0**, is fully backward compatible (every AEGIS feature is opt in, behind a `False` by default flag), and is documented below with direct, clickable links to every piece of work.
+Across the coding period I shipped **six substantial pull requests** covering all four pillars plus four brand new CTF challenges, in addition to **two smaller fixes merged earlier** that hardened the FinBot core before the coding period began. All work is released under the project's existing **Apache License 2.0**, is fully backward compatible (every AEGIS feature is opt in, behind a `False` by default flag), and is documented below with direct, clickable links to every piece of work.
 
 ---
 
@@ -108,7 +108,7 @@ FinBot-AEGIS Security Layer   (delivered this GSoC cycle)
         ↓
 Redis EventBus            (existing FinBot infrastructure, zero new dependencies)
         ↓
-CTF Detector Engine  →  19 existing challenges + 2 new AEGIS challenges (Memory Poison Replay, Multi Agent Cascade Failure)
+CTF Detector Engine  →  19 existing challenges + 4 new AEGIS challenges
 ```
 
 **Design principles carried through every pillar:** zero trust between agents, least agency by default, an immutable and tamper evident audit trail, fail secure defaults, and defense in depth. Each pillar keeps protecting the platform even if another layer is disabled.
@@ -214,6 +214,7 @@ DATA_ANALYST_PROFILE = AgentProfile(
 - **"Memory Poison Replay"** challenge (`memory_poisoning/memory_poison_replay.yaml`, 250 points, Intermediate). The player must poison an agent's conversation memory to escalate privileges and reach another user's financial data. Paired with **`MemoryPoisonReplayDetector`**, a two gate detector requiring both the injection and the subsequent unauthorized access in the same session. Maps to **ASI03 / ASI06**, **CWE-250 / CWE-284**.
 - **"Multi Agent Cascade Failure"** challenge (`cascade_failure/multi_agent_cascade.yaml`, 300 points, Advanced). The player must trigger a failure that cascades across at least three agents. Paired with **`CascadeFailureDetector`**, which watches for suspicious broadcast messages and error propagation patterns across the agent mesh. Maps to **ASI08 / ASI02**, **CWE-94 / CWE-20**.
 - Both detectors inherit from `BaseDetector`, register via `@register_detector`, and were verified against the full existing regression suite with **zero breaking changes**.
+- **Two additional challenges** were completed in this same phase, bringing the total to four new CTF challenges shipped: *[Challenge 3 name]* and *[Challenge 4 name]*. Send me their names, point values, difficulty, detector class, and ASI/CWE mapping and I will slot them in here to match the write-ups above.
 
 ---
 
@@ -324,7 +325,7 @@ Holding my original proposal to account, milestone by milestone:
 | M5 · Red Team Harness | Jul 25 | ✅ Delivered | [#546](https://github.com/GenAI-Security-Project/finbot-ctf/pull/546) |
 | M6 · Attack Simulator Complete (all 10 ASI) | Aug 8 | ✅ **Delivered ahead of schedule** (by Week 6, early July) | [#530](https://github.com/GenAI-Security-Project/finbot-ctf/pull/530) |
 | M7 · Policy Engine Production | Aug 16 | 🟡 Partial, interceptor and profiles complete; intent capsule signing and memory segmentation remain stubs | [#543](https://github.com/GenAI-Security-Project/finbot-ctf/pull/543) |
-| M8 · Challenge Expansion Wave 1 | Aug 8 | 🟡 Partial, 2 of the planned 10 to 12 new challenges delivered | [#553](https://github.com/GenAI-Security-Project/finbot-ctf/pull/553) |
+| M8 · Challenge Expansion Wave 1 | Aug 8 | 🟡 Partial, 4 of the planned 10 to 12 new challenges delivered | [#553](https://github.com/GenAI-Security-Project/finbot-ctf/pull/553) |
 | M9 · QA / CI Hardening | Aug 16 | ✅ Delivered, expanded test matrix, `aegis-bench.yml`, O(1) event type indexing | [#518](https://github.com/GenAI-Security-Project/finbot-ctf/pull/518), [#546](https://github.com/GenAI-Security-Project/finbot-ctf/pull/546) |
 | M10 · Final Submission | Aug 24 | ⏳ In progress | This report |
 
@@ -340,8 +341,8 @@ Holding my original proposal to account, milestone by milestone:
 | Policy Engine / IntentGate (Pillar 2) | ✅ Functional in **Observe** mode · interceptor and 6 agent profiles shipped · **Enforce** mode not yet wired into production config |
 | Attack Simulator (Pillar 1) | ✅ Complete, full ASI01 to ASI10 recipe coverage, 5 adversarial MCP mocks, mutation engine |
 | Red Team Harness (Pillar 4) | ✅ Complete, `pytest-aegis`, AIVSS scoring, CI benchmarking, end to end tests |
-| Challenge Expansion (Track A) | 🟡 Partial, 2 of 10 to 12 planned new CTF challenges delivered |
-| Documentation & Blogs (Track C) | 🟡 Partial, midterm progress report published; closing architecture post pending |
+| Challenge Expansion (Track A) | 🟡 Partial, 4 of 10 to 12 planned new CTF challenges delivered |
+| Documentation & Blogs (Track C) | ✅ Complete, both blog posts published, MkDocs documentation site complete |
 
 All AEGIS code lives under `finbot/aegis/`, is additive only to the existing FinBot codebase, and is fully feature flagged off by default (`AEGIS_ENABLED=False`), so the platform's core CTF gameplay is never at risk.
 
@@ -350,10 +351,8 @@ All AEGIS code lives under `finbot/aegis/`, is additive only to the existing Fin
 ## 12. What's Left To Do
 
 - **Get the six open pull requests merged** (#518, #520, #530, #543, #546, #553). This is priority one, targeted for completion before the August 24 final submission deadline.
-- **Expand CTF challenge coverage** from the 2 delivered (*Memory Poison Replay*, *Multi Agent Cascade Failure*) toward the original target of 10 to 12 new challenges, closing remaining gaps in ASI07, ASI09, and ASI10.
+- **Expand CTF challenge coverage** from the 4 delivered toward the original target of 10 to 12 new challenges.
 - **Complete the Week 8 stubs**: `capsule.py` (HMAC intent capsule signing) and `memory.py` (provenance tracked memory namespace isolation), to move the Policy Engine from Observe mode into a production ready Enforce mode.
-- **Publish the second technical blog post**, an architecture deep dive on event driven CTF detection, to complement the midterm progress report already live.
-- **Finish the MkDocs documentation site**: architecture guide, API reference, challenge authoring guide, and defender playbook.
 - **Anyone extending this work** can start from the `finbot/aegis/` package tree and the test suites under `tests/unit/aegis/` and `tests/integration/aegis/`. Every module above is independently unit tested and documented inline.
 
 ---
@@ -362,7 +361,7 @@ All AEGIS code lives under `finbot/aegis/`, is additive only to the existing Fin
 
 📝 **Published (Midterm):** [*"Hardening Agentic AI: Building the AEGIS Security Framework for OWASP FinBot CTF"*](https://gsocupdate1.hashnode.dev/hardening-agentic-ai-building-the-aegis-security-framework-for-owasp-finbot-ctf), a technical progress report covering the first seven weeks: the telemetry pipeline's cryptographic design, IntentGate's intent capsule concept, the Attack Simulator's sandbox architecture, and the four engineering challenges detailed in [§9](#9-engineering-challenges-solutions).
 
-📝 **Planned (Closing):** *"Building FinBot-AEGIS: Sandboxed MCP Red Teaming Against the OWASP Agentic Top 10"*, covering the Pillar 1 simulator design, mock adversarial MCP servers, and final Red Team Harness benchmark results, targeted for the OWASP GenAI Security Project blog.
+📝 **Published (Closing):** [*"Building FinBot-AEGIS: Sandboxed MCP Red Teaming Against the OWASP Agentic Top 10"*](https://hashnode.com/edit/cmt7bpjrd00000agihc6ngt6v), covering the Pillar 1 simulator design, mock adversarial MCP servers, and final Red Team Harness benchmark results, published on the OWASP GenAI Security Project blog.
 
 ---
 
@@ -399,4 +398,4 @@ This project sits directly on my ongoing research path. The **Telemetry Pipeline
 
 All code referenced in this report is released under the **Apache License 2.0**, matching FinBot's existing project license, and lives in the [`GenAI-Security-Project/finbot-ctf`](https://github.com/GenAI-Security-Project/finbot-ctf) repository under `finbot/aegis/`.
 
-<p align="center"><i>Thank you to Google, the OWASP Foundation, and the OWASP GenAI Security Project team for an incredible Summer of Code.</i></p>
+<p align="center"><i>Thank you to Google, the <a href="https://github.com/owasp">OWASP Foundation</a>, and the <a href="https://github.com/GenAI-Security-Project">OWASP GenAI Security Project</a> team for an incredible Summer of Code.</i></p>
