@@ -7,6 +7,7 @@
 </table>
 
 <h1 align="center">🛡️ FinBot-AEGIS</h1>
+
 <h3 align="center">Agentic Exploitation & Guardrail Infrastructure System</h3>
 <p align="center"><i>A defense in depth security runtime built for the OWASP FinBot CTF platform</i></p>
 
@@ -74,6 +75,7 @@ AEGIS is built around **four interlocking pillars**:
 - 🎯 **Attack Simulator**: a sandboxed harness that replays and mutates adversarial payloads across all ten OWASP Agentic Top 10 categories.
 - 🔐 **Policy Engine ("IntentGate")**: a Policy Enforcement Point that validates every MCP tool call against least privilege agent profiles.
 - 📡 **Telemetry Pipeline ("SentinelStream")**: a tamper evident, HMAC-SHA256 chained audit trail streamed in real time.
+- 
 - 🧪 **Red Team Harness**: an AIVSS aligned scoring engine and `pytest-aegis` plugin that benchmarks detector effectiveness in CI.
 
 Across the coding period I shipped **six substantial pull requests** covering all four pillars plus four brand new CTF challenges, in addition to **two smaller fixes merged earlier** that hardened the FinBot core before the coding period began. All work is released under the project's existing **Apache License 2.0**, is fully backward compatible (every AEGIS feature is opt in, behind a `False` by default flag), and is documented below with direct, clickable links to every piece of work.
